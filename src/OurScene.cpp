@@ -22,7 +22,7 @@ OurScene::OurScene()
 		agent->setPosition(Vector2D(20 * i, 20 * i));
 		agent->setTarget(Vector2D(20 * i, 20 * i));
 		agent->loadSpriteTexture("../res/zombie1.png", 8);
-		agent->setComplex(true);
+		//agent->setComplex(true);
 
 		agents.push_back(agent);
 		//target = Vector2D(10 * i, 10 * i);
