@@ -13,7 +13,9 @@ Agent::Agent() : sprite_texture(0),
 				 sprite_num_frames(0),
 	             sprite_w(0),
 	             sprite_h(0),
-	             draw_sprite(false)
+	             draw_sprite(false),
+				 complex(false),
+				 index(-1)
 {
 }
 
@@ -81,7 +83,10 @@ void Agent::update(float dtime, SDL_Event *event)
 	}
 
 	// Apply the steering behavior
-	steering_behaviour->applySteeringForce(this, dtime);
+	if (complex)
+		steering_behaviour->applyComplexSteeringForce(gameAgents, index, dtime);
+	else
+		steering_behaviour->applySteeringForce(this, dtime);
 	
 	// Update orientation
 	if (velocity.Length())
@@ -137,4 +142,14 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 		SDL_FreeSurface(image);
 
 	return true;
+}
+
+void Agent::setComplex(bool c) {
+	complex = c;
+}
+void Agent::setGameAgents(std::vector<Agent> vec) {
+	gameAgents = vec;
+}
+void Agent::setIndex(int _i) {
+	index = _i;
 }

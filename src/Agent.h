@@ -6,7 +6,7 @@
 #include "SDL_SimpleApp.h"
 #include "Vector2D.h"
 #include "utils.h"
-
+#include <vector>
 
 class Agent
 {
@@ -17,7 +17,10 @@ public:
 		SteeringBehavior() {};
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
+		virtual void applyComplexSteeringForce(std::vector<Agent> agents, int agent_index, float dtime) {};
+		
 	};
+
 private:
 	SteeringBehavior *steering_behaviour;
 	Vector2D position;
@@ -34,6 +37,9 @@ private:
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
+	bool complex;
+	int index;
+	std::vector<Agent> gameAgents;
 
 public:
 	Agent();
@@ -49,5 +55,7 @@ public:
 	void update(float dtime, SDL_Event *event);
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
-	
+	void setComplex(bool c);
+	void setGameAgents(std::vector<Agent> vec);
+	void setIndex(int _i);
 };
