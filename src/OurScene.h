@@ -14,5 +14,6 @@ public:
 	const char* getTitle();
 private:
 	std::vector<Agent*> agents;
-	Vector2D target;
+	Vector2D mouseTarget;
+	int maxPursuers;
 }; 
