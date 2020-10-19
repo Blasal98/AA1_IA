@@ -15,7 +15,7 @@ OurScene::OurScene()
 	mouseTarget = Vector2D(1000, 600);
 
 	//creacio dels agents perseguidors
-	maxPursuers = 1;
+	maxPursuers = 10;
 	for (int i = 0; i < maxPursuers; i++) {
 		agent = new Agent;
 		agent->setBehavior(new Seek);
@@ -71,11 +71,12 @@ void OurScene::update(float dtime, SDL_Event *event)
 
 void OurScene::draw()
 {
-	draw_circle(TheApp::Instance()->getRenderer(), agents[1]->getTarget().x, agents[1]->getTarget().y, 15, 0, 255, 0, 255);
+
 	draw_circle(TheApp::Instance()->getRenderer(), (int)mouseTarget.x, (int)mouseTarget.y, 15, 255, 0, 0, 255);
 	agents[0]->draw();
 	for (int i = 0; i < maxPursuers; i++) {
 		agents[i+1]->draw();
+		draw_circle(TheApp::Instance()->getRenderer(), agents[i + 1]->getTarget().x, agents[i + 1]->getTarget().y, 15, 0, 255, 0, 255);
 	}
 }
 
