@@ -1,6 +1,6 @@
 #include "Obstacle.h"
 
-Obstacle::Obstacle() : h(50), w(50), position({75,100})
+Obstacle::Obstacle() : h(50), w(50), position({75,50})
 {
 	corners = new Vector2D[4];
 

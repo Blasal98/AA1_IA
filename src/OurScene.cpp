@@ -66,17 +66,22 @@ void OurScene::update(float dtime, SDL_Event *event)
 	agents[0]->update(dtime, event);
 
 
-	//Collision
+	
 	
 	//Pursue
 	for (int i = 0; i < maxPursuers; i++) {
-		float T = (agents[i + 1]->getPosition() - agents[0]->getPosition()).Length() / agents[i+1]->getMaxVelocity();
-		Vector2D predictedTarget = agents[0]->getPosition() + agents[0]->getVelocity() * T * 0.5;
-		//std::cout << T <<std::endl;
-		agents[i+1]->setTarget(predictedTarget);
-		SteeringBehaviours::Seek(agents[i + 1],dtime);
+		//Collision
+		if (!SteeringBehaviours::ObstacleAvoidance(agents[i + 1], obstacles, dtime)) {
+
+			float T = (agents[i + 1]->getPosition() - agents[0]->getPosition()).Length() / agents[i + 1]->getMaxVelocity();
+			Vector2D predictedTarget = agents[0]->getPosition() + agents[0]->getVelocity() * T * 0.5;
+			//std::cout << agents[i + 1]->getPosition().x <<std::endl;
+			agents[i + 1]->setTarget(predictedTarget);
+			SteeringBehaviours::Seek(agents[i + 1], dtime);
+		}
 	}
 	for (int i = 0; i < maxPursuers; i++) agents[i + 1]->update(dtime, event);
+	
 }
 
 void OurScene::draw()

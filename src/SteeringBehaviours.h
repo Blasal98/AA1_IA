@@ -16,19 +16,21 @@ namespace SteeringBehaviours {
 		agent->addForce(steeringForce * agent->getMaxForce());
 
 	}
-	void ObstacleAvoidance(Agent *agent, std::vector<Obstacle*> obstacles, float dtime)
+	bool ObstacleAvoidance(Agent *agent, std::vector<Obstacle*> obstacles, float dtime)
 	{
 		Vector2D* intersectionPoint = new Vector2D{ 0,0 };
 		bool doesItIntersect = false;
 		Vector2D rayCast = agent->getPosition();
-		rayCast += agent->getVelocity().Normalize() /** lookAhead*/;
+		rayCast += agent->getVelocity().Normalize() * 100;
 
 		for (int i = 0; i < obstacles.size(); i++) {
 
-			Vector2DUtils::SegmentSegmentIntersection(obstacles[i]->getCorners()[0], obstacles[i]->getCorners()[1],
+			if (Vector2DUtils::SegmentSegmentIntersection(obstacles[i]->getCorners()[0], obstacles[i]->getCorners()[1],
 				agent->getPosition(), rayCast,
-				doesItIntersect, intersectionPoint);
+				doesItIntersect, intersectionPoint))
+				break;
 		}
+		return doesItIntersect;
 	}
 
 
