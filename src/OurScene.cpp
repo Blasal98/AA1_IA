@@ -30,6 +30,7 @@ OurScene::OurScene()
 		
 		
 	}
+	obstacles.push_back(new Obstacle());
 
 
 }
@@ -79,6 +80,8 @@ void OurScene::draw()
 		agents[i+1]->draw();
 		draw_circle(TheApp::Instance()->getRenderer(), agents[i + 1]->getTarget().x, agents[i + 1]->getTarget().y, 15, 0, 255, 0, 255);
 	}
+	draw_circle(TheApp::Instance()->getRenderer(), obstacles[0]->getPosition().x, obstacles[0]->getPosition().y, 10, 0, 0, 255, 255);
+	draw_circle(TheApp::Instance()->getRenderer(), obstacles[0]->getPosition().x + obstacles[0]->getW(), obstacles[0]->getPosition().y + obstacles[0]->getH(), 10, 0, 0, 255, 255);
 }
 
 const char* OurScene::getTitle()

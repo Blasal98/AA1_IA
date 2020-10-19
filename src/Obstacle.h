@@ -5,8 +5,11 @@ class Obstacle {
 public:
 	Obstacle();
 	~Obstacle();
+	float getH();
+	float getW();
+	Vector2D getPosition();
 private:
-	float radius;
+	float h,w;
 	Vector2D position;
 
 };

@@ -7,5 +7,7 @@ class ObstacleAvoidance :
 public:
 	ObstacleAvoidance();
 	~ObstacleAvoidance();
-	void applyComplexSteeringForce(Agent *agent, std::vector<Obstacle> obstacles, float dtime);
+	void applyComplexSteeringForce(Agent *agent, std::vector<Obstacle*> obstacles, float dtime);
+private:
+	float lookAhead = 10;
 };

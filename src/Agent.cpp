@@ -156,7 +156,7 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 void Agent::setComplex(bool c) {
 	complex = c;
 }
-void Agent::setGameAgents(std::vector<Agent> vec) {
+void Agent::setGameAgents(std::vector<Agent*> vec) {
 	gameAgents = vec;
 }
 void Agent::setIndex(int _i) {

@@ -19,8 +19,8 @@ public:
 		SteeringBehavior() {};
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
-		virtual void applyComplexSteeringForce(Agent *agent, std::vector<Agent> agents, int agent_index, float dtime) {};
-		virtual void applyComplexSteeringForce(Agent *agent, std::vector<Obstacle> obstacles, float dtime) {};
+		virtual void applyComplexSteeringForce(Agent *agent, std::vector<Agent*> agents, int agent_index, float dtime) {};
+		virtual void applyComplexSteeringForce(Agent *agent, std::vector<Obstacle*> obstacles, float dtime) {};
 	};
 	
 
@@ -44,7 +44,7 @@ private:
 	int sprite_h;
 	bool complex;
 	int index;
-	std::vector<Agent> gameAgents;
+	std::vector<Agent*> gameAgents;
 
 public:
 	Agent();
@@ -62,7 +62,7 @@ public:
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void setComplex(bool c);
-	void setGameAgents(std::vector<Agent> vec);
+	void setGameAgents(std::vector<Agent*> vec);
 	void setIndex(int _i);
 	void addForce(Vector2D _f);
 };
