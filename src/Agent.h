@@ -17,7 +17,7 @@ public:
 		SteeringBehavior() {};
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
-		virtual void applyComplexSteeringForce(std::vector<Agent> agents, int agent_index, float dtime) {};
+		virtual void applyComplexSteeringForce(Agent *agent, std::vector<Agent> agents, int agent_index, float dtime) {};
 		
 	};
 

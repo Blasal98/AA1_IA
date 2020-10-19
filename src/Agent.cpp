@@ -84,7 +84,7 @@ void Agent::update(float dtime, SDL_Event *event)
 
 	// Apply the steering behavior
 	if (complex)
-		steering_behaviour->applyComplexSteeringForce(gameAgents, index, dtime);
+		steering_behaviour->applyComplexSteeringForce(this, gameAgents, index, dtime);
 	else
 		steering_behaviour->applySteeringForce(this, dtime);
 	
