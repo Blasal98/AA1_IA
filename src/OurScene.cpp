@@ -1,6 +1,5 @@
 #include "OurScene.h"
-#include "Seek.h"
-#include "ObstacleAvoidance.h"
+#include "SteeringBehaviours.h"
 
 using namespace std;
 
@@ -8,7 +7,7 @@ OurScene::OurScene()
 {
 	//creacio del agent main
 	Agent *agent = new Agent;
-	agent->setBehavior(new Seek);
+
 	agent->setPosition(Vector2D(1000, 600));
 	agent->setTarget(Vector2D(1000, 600));
 	agent->loadSpriteTexture("../res/soldier.png", 4);
@@ -19,7 +18,7 @@ OurScene::OurScene()
 	maxPursuers = 1;
 	for (int i = 0; i < maxPursuers; i++) {
 		agent = new Agent;
-		agent->setBehavior(new Seek);
+
 		agent->setPosition(Vector2D(20 * i, 20 * i));
 		agent->setTarget(Vector2D(20 * i, 20 * i));
 		agent->loadSpriteTexture("../res/zombie1.png", 8);
@@ -58,17 +57,26 @@ void OurScene::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
+	for (int i = 0; i < maxPursuers+1; i++) {
+		agents[i]->setForce({ 0,0 });
+
+	}
+
+	SteeringBehaviours::Seek(agents[0], dtime);
 	agents[0]->update(dtime, event);
 
+
+	//Collision
+	
 	//Pursue
 	for (int i = 0; i < maxPursuers; i++) {
 		float T = (agents[i + 1]->getPosition() - agents[0]->getPosition()).Length() / agents[i+1]->getMaxVelocity();
 		Vector2D predictedTarget = agents[0]->getPosition() + agents[0]->getVelocity() * T * 0.5;
 		//std::cout << T <<std::endl;
 		agents[i+1]->setTarget(predictedTarget);
-		agents[i+1]->update(dtime, event);
+		SteeringBehaviours::Seek(agents[i + 1],dtime);
 	}
-	
+	for (int i = 0; i < maxPursuers; i++) agents[i + 1]->update(dtime, event);
 }
 
 void OurScene::draw()

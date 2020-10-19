@@ -24,12 +24,6 @@
     <ClCompile Include="..\src\Agent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Seek.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Flee.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\SceneSeek.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,9 +39,6 @@
     <ClCompile Include="..\src\OurScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ObstacleAvoidance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Obstacle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,12 +51,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Agent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Seek.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Flee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SceneSeek.h">
@@ -86,10 +71,10 @@
     <ClInclude Include="..\src\OurScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ObstacleAvoidance.h">
+    <ClInclude Include="..\src\Obstacle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Obstacle.h">
+    <ClInclude Include="..\src\SteeringBehaviours.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
