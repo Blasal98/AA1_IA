@@ -7,10 +7,12 @@
 #include "Vector2D.h"
 #include "utils.h"
 #include <vector>
+#include "Obstacle.h"
 
 class Agent
 {
 public:
+
 	class SteeringBehavior
 	{
 	public:
@@ -18,8 +20,9 @@ public:
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
 		virtual void applyComplexSteeringForce(Agent *agent, std::vector<Agent> agents, int agent_index, float dtime) {};
-		
+		virtual void applyComplexSteeringForce(Agent *agent, std::vector<Obstacle> obstacles, float dtime) {};
 	};
+	
 
 private:
 	SteeringBehavior *steering_behaviour;

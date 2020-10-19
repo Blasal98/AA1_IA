@@ -1,5 +1,6 @@
 #include "OurScene.h"
 #include "Seek.h"
+#include "ObstacleAvoidance.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ OurScene::OurScene()
 	mouseTarget = Vector2D(1000, 600);
 
 	//creacio dels agents perseguidors
-	maxPursuers = 10;
+	maxPursuers = 1;
 	for (int i = 0; i < maxPursuers; i++) {
 		agent = new Agent;
 		agent->setBehavior(new Seek);
@@ -62,7 +63,7 @@ void OurScene::update(float dtime, SDL_Event *event)
 	for (int i = 0; i < maxPursuers; i++) {
 		float T = (agents[i + 1]->getPosition() - agents[0]->getPosition()).Length() / agents[i+1]->getMaxVelocity();
 		Vector2D predictedTarget = agents[0]->getPosition() + agents[0]->getVelocity() * T * 0.5;
-		std::cout << T <<std::endl;
+		//std::cout << T <<std::endl;
 		agents[i+1]->setTarget(predictedTarget);
 		agents[i+1]->update(dtime, event);
 	}
