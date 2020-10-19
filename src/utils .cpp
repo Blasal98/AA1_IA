@@ -93,3 +93,8 @@ void draw_circle(SDL_Renderer *surface, int n_cx, int n_cy, int rad, Uint8 r, Ui
 		}
 	}
 }
+
+float mapping(float x, float in_min, float in_max, float out_min, float out_max)
+{
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}

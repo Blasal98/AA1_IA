@@ -8,14 +8,14 @@ OurScene::OurScene()
 	//creacio del agent main
 	Agent *agent = new Agent;
 	agent->setBehavior(new Seek);
-	agent->setPosition(Vector2D(640, 360));
-	agent->setTarget(Vector2D(640, 360));
+	agent->setPosition(Vector2D(1000, 600));
+	agent->setTarget(Vector2D(1000, 600));
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
-	mouseTarget = Vector2D(640, 360);
+	mouseTarget = Vector2D(1000, 600);
 
 	//creacio dels agents perseguidors
-	maxPursuers = 10;
+	maxPursuers = 1;
 	for (int i = 0; i < maxPursuers; i++) {
 		agent = new Agent;
 		agent->setBehavior(new Seek);
@@ -60,10 +60,9 @@ void OurScene::update(float dtime, SDL_Event *event)
 
 	//Pursue
 	for (int i = 0; i < maxPursuers; i++) {
-		float T = (agents[i + 1]->getPosition() - agents[0]->getPosition()).Length() / agents[i + 1]->getMaxVelocity();
-		Vector2D predictedTarget = agents[0]->getPosition() + agents[0]->getVelocity() * T;
-		
-
+		float T = (agents[i + 1]->getPosition() - agents[0]->getPosition()).Length() / agents[i+1]->getMaxVelocity();
+		Vector2D predictedTarget = agents[0]->getPosition() + agents[0]->getVelocity() * T * 0.5;
+		std::cout << T <<std::endl;
 		agents[i+1]->setTarget(predictedTarget);
 		agents[i+1]->update(dtime, event);
 	}
@@ -72,6 +71,7 @@ void OurScene::update(float dtime, SDL_Event *event)
 
 void OurScene::draw()
 {
+	draw_circle(TheApp::Instance()->getRenderer(), agents[1]->getTarget().x, agents[1]->getTarget().y, 15, 0, 255, 0, 255);
 	draw_circle(TheApp::Instance()->getRenderer(), (int)mouseTarget.x, (int)mouseTarget.y, 15, 255, 0, 0, 255);
 	agents[0]->draw();
 	for (int i = 0; i < maxPursuers; i++) {
