@@ -161,8 +161,8 @@ namespace SteeringBehaviours {
 
 	void Flocking(Agent *agent, std::vector<Agent*> agents, int agent_index, float dtime)
 	{
-		float K_SEPARATION_FORCE = 1;
-		float K_COHESION_FORCE = 1;
+		float K_SEPARATION_FORCE = 50;
+		float K_COHESION_FORCE = 10;
 		float K_ALIGNMENT_FORCE = 1;
 		float radius = 75;
 		int* neighbourCount = new int(0);

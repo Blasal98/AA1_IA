@@ -83,9 +83,9 @@ void OurScene::update(float dtime, SDL_Event *event)
 		agents[i + 1]->update(dtime, event);
 		//std::cout << agents[i+1]->getMaxVelocity() << std::endl;
 	}
-	for (int i = 0; i < maxPursuers; i++) {
+	for (int i = 0; i < maxPursuers+1; i++) {
 
-		std::cout << agents[i+1]->getVelocity().Length() << std::endl;
+		std::cout << agents[i]->getTotalForce().Length()<< std::endl;
 	}
 		
 	

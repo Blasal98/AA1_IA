@@ -42,6 +42,7 @@ public:
 	Vector2D getVelocity();
 	float getMaxVelocity();
 	float getMaxForce();
+	Vector2D getTotalForce();
 
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);

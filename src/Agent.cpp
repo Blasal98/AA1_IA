@@ -157,4 +157,7 @@ void Agent::setForce(Vector2D _f) {
 float Agent::getMaxForce() {
 	return max_force;
 }
+Vector2D Agent::getTotalForce() {
+	return totalForce;
+}
 
