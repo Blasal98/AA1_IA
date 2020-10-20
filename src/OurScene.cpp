@@ -32,7 +32,7 @@ OurScene::OurScene()
 
 	obstacles.push_back(new Obstacle(100, 200, { 800,400 }));
 	obstacles.push_back(new Obstacle(175, 50, { 100,400 }));
-	obstacles.push_back(new Obstacle(25, 200, { 200,100 }));
+	obstacles.push_back(new Obstacle(25, 200, { 200,200 }));
 	obstacles.push_back(new Obstacle(10, 200, { 350,500 }));
 }
 
@@ -71,7 +71,9 @@ void OurScene::update(float dtime, SDL_Event *event)
 	for (int i = 0; i < maxPursuers; i++) {
 		//Collision
 		if (!SteeringBehaviours::ObstacleAvoidance(agents[i + 1], obstacles, dtime)) {
-			//Pursue
+			//Pursue + Flocking
+			
+			SteeringBehaviours::Flocking(agents[i + 1], agents, i + 1, dtime);
 			SteeringBehaviours::Pursue(agents[i + 1], agents, i + 1, dtime);
 		}
 
