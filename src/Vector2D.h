@@ -223,7 +223,7 @@ namespace Vector2DUtils
 	static bool SegmentSegmentIntersection(Vector2D s1_start, Vector2D s1_end, Vector2D s2_start, Vector2D s2_end, 
 		bool doIntersectOnPoints = true, Vector2D* intersectionPoint = nullptr)
 	{
-		intersectionPoint = {};
+		//intersectionPoint = {};
 		Vector2D r = s1_end - s1_start;
 		Vector2D s = s2_end - s2_start;
 		float rCrossS = r.x * s.y - r.y * s.x;
