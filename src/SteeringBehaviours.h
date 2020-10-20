@@ -98,7 +98,7 @@ namespace SteeringBehaviours {
 
 	
 
-	void CalculateSeparationDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D* separationDir, float r)
+	void CalculateSeparationDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D* separationDir, float r, int* nC)
 	{
 		Vector2D separationVec = {0,0};
 		int neighbourCount = 0;
@@ -114,10 +114,11 @@ namespace SteeringBehaviours {
 
 		}
 		separationVec /= neighbourCount;
+		*nC = neighbourCount;
 		*separationDir = separationVec.Normalize();
 	}
 
-	void CalculateCohesionDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D* cohesionDir, float r)
+	void CalculateCohesionDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D* cohesionDir, float r, int* nC)
 	{
 		Vector2D averagePosition = { 0,0 };
 		int neighbourCount = 0;
@@ -134,10 +135,11 @@ namespace SteeringBehaviours {
 		}
 		averagePosition /= neighbourCount;
 		averagePosition -= agent->getPosition();
+		*nC = neighbourCount;
 		*cohesionDir = averagePosition.Normalize();
 	}
 
-	void CalculateAlignmentDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D* alignmentDir, float r)
+	void CalculateAlignmentDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D* alignmentDir, float r, int* nC)
 	{
 		Vector2D averageVelocity = { 0,0 };
 		int neighbourCount = 0;
@@ -153,6 +155,7 @@ namespace SteeringBehaviours {
 
 		}
 		averageVelocity /= neighbourCount;
+		*nC = neighbourCount;
 		*alignmentDir = averageVelocity.Normalize();
 	}
 
@@ -161,16 +164,20 @@ namespace SteeringBehaviours {
 		float K_SEPARATION_FORCE = 1;
 		float K_COHESION_FORCE = 1;
 		float K_ALIGNMENT_FORCE = 1;
-		float radius = 50;
+		float radius = 75;
+		int* neighbourCount = new int(0);
 
 		Vector2D* separationDir = new Vector2D;
 		Vector2D* cohesionDir = new Vector2D;
 		Vector2D* alignmentDir = new Vector2D;
-		CalculateSeparationDirection(agent, agents, agent_index, separationDir, radius);
-		CalculateCohesionDirection(agent, agents, agent_index, cohesionDir, radius);
-		CalculateAlignmentDirection(agent, agents, agent_index, alignmentDir, radius);
-		Vector2D FlockingForce = *separationDir * K_SEPARATION_FORCE + *cohesionDir * K_COHESION_FORCE + *alignmentDir * K_ALIGNMENT_FORCE;
-		FlockingForce.Normalize();
-		agent->addForce(FlockingForce * agent->getMaxForce()*0.5);
+
+		CalculateSeparationDirection(agent, agents, agent_index, separationDir, radius, neighbourCount);
+		CalculateCohesionDirection(agent, agents, agent_index, cohesionDir, radius, neighbourCount);
+		CalculateAlignmentDirection(agent, agents, agent_index, alignmentDir, radius, neighbourCount);
+		if(*neighbourCount>0){
+			Vector2D FlockingForce = *separationDir * K_SEPARATION_FORCE + *cohesionDir * K_COHESION_FORCE + *alignmentDir * K_ALIGNMENT_FORCE;
+			FlockingForce.Normalize();
+			agent->addForce(FlockingForce * agent->getMaxForce());
+		}
 	}
 }

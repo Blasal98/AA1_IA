@@ -15,7 +15,7 @@ OurScene::OurScene()
 	mouseTarget = Vector2D(1100, 600);
 
 	//creacio dels agents perseguidors
-	maxPursuers = 10;
+	maxPursuers = 5;
 	for (int i = 0; i < maxPursuers; i++) {
 		agent = new Agent;
 
@@ -78,7 +78,16 @@ void OurScene::update(float dtime, SDL_Event *event)
 		}
 
 	}
-	for (int i = 0; i < maxPursuers; i++) agents[i + 1]->update(dtime, event);
+	for (int i = 0; i < maxPursuers; i++) {
+		
+		agents[i + 1]->update(dtime, event);
+		//std::cout << agents[i+1]->getMaxVelocity() << std::endl;
+	}
+	for (int i = 0; i < maxPursuers; i++) {
+
+		std::cout << agents[i+1]->getVelocity().Length() << std::endl;
+	}
+		
 	
 }
 
