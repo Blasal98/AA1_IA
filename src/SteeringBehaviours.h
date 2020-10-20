@@ -19,7 +19,7 @@ namespace SteeringBehaviours {
 	bool ObstacleAvoidance(Agent *agent, std::vector<Obstacle*> obstacles, float dtime)
 	{
 		Vector2D* intersectionPoint = new Vector2D{ 0,0 };
-		bool doesItIntersect = false;
+		bool doesItIntersect = true;
 		Vector2D rayCast = agent->getPosition();
 		rayCast += agent->getVelocity().Normalize() * 100;
 
@@ -27,10 +27,12 @@ namespace SteeringBehaviours {
 
 			if (Vector2DUtils::SegmentSegmentIntersection(obstacles[i]->getCorners()[0], obstacles[i]->getCorners()[1],
 				agent->getPosition(), rayCast,
-				doesItIntersect, intersectionPoint))
-				break;
+				doesItIntersect, intersectionPoint)) {
+				return true;
+			}
+				
 		}
-		return doesItIntersect;
+		return false;
 	}
 
 

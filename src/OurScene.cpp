@@ -65,8 +65,14 @@ void OurScene::update(float dtime, SDL_Event *event)
 	SteeringBehaviours::Seek(agents[0], dtime);
 	agents[0]->update(dtime, event);
 
-
 	
+	/*Vector2D a = { 0,0 };
+	Vector2D b = { 5,5 };
+	Vector2D c = { 0,5 };
+	Vector2D d = { 5,0 };
+	Vector2D* intersectionPoint = new Vector2D{ 0,0 };
+	bool doesItIntersect = true;
+	Vector2DUtils::SegmentSegmentIntersection(a,b,c,d,doesItIntersect,intersectionPoint);*/
 	
 	//Pursue
 	for (int i = 0; i < maxPursuers; i++) {
@@ -79,6 +85,10 @@ void OurScene::update(float dtime, SDL_Event *event)
 			agents[i + 1]->setTarget(predictedTarget);
 			SteeringBehaviours::Seek(agents[i + 1], dtime);
 		}
+		else {
+			agents[i + 1]->addForce({0,10000});
+		}
+
 	}
 	for (int i = 0; i < maxPursuers; i++) agents[i + 1]->update(dtime, event);
 	
@@ -95,6 +105,9 @@ void OurScene::draw()
 	}
 	draw_circle(TheApp::Instance()->getRenderer(), obstacles[0]->getPosition().x, obstacles[0]->getPosition().y, 10, 0, 0, 255, 255);
 	draw_circle(TheApp::Instance()->getRenderer(), obstacles[0]->getPosition().x + obstacles[0]->getW(), obstacles[0]->getPosition().y + obstacles[0]->getH(), 10, 0, 0, 255, 255);
+
+	Vector2D auxVector = agents[1]->getPosition() + agents[1]->getVelocity().Normalize()*100;
+	draw_circle(TheApp::Instance()->getRenderer(), auxVector.x, auxVector.y, 10, 0, 255, 255, 255);
 }
 
 const char* OurScene::getTitle()
