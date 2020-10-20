@@ -30,7 +30,7 @@ int main(int argc, char ** argv)
 		switch (event.type)
 		{
 		case SDL_KEYDOWN:
-			if (event.key.keysym.scancode == SDL_SCANCODE_0)
+			if (event.key.keysym.scancode == SDL_SCANCODE_R)
 			{
 				delete(curr_scene);
 				curr_scene = new OurScene;

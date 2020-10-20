@@ -5,6 +5,7 @@ using namespace std;
 
 OurScene::OurScene()
 {
+	showTargets = false;
 	//creacio del agent main
 	Agent *agent = new Agent;
 
@@ -15,12 +16,16 @@ OurScene::OurScene()
 	mouseTarget = Vector2D(1100, 600);
 
 	//creacio dels agents perseguidors
-	maxPursuers = 5;
+	maxPursuers = 8;
 	for (int i = 0; i < maxPursuers; i++) {
 		agent = new Agent;
 
-		agent->setPosition(Vector2D(20 * i, 20 * i));
-		agent->setTarget(Vector2D(20 * i, 20 * i));
+		agent->setPosition(Vector2D(50 * (i + 1), 50));
+		agent->setTarget(Vector2D(50 * (i + 1), 50));
+		if (i >= maxPursuers / 2) {
+			agent->setPosition(Vector2D(50 * (i + 1 - maxPursuers/2), 100));
+			agent->setTarget(Vector2D(50 * (i + 1 - maxPursuers / 2), 100));
+		}
 		agent->loadSpriteTexture("../res/zombie1.png", 8);
 		//agent->setComplex(true);
 
@@ -56,6 +61,12 @@ void OurScene::update(float dtime, SDL_Event *event)
 			agents[0]->setTarget(mouseTarget);
 		}
 		break;
+	case SDL_KEYDOWN:
+		if (event->key.keysym.scancode == SDL_SCANCODE_E)
+		{
+			showTargets = !showTargets;
+		}
+		break;
 	default:
 		break;
 	}
@@ -81,7 +92,6 @@ void OurScene::update(float dtime, SDL_Event *event)
 	for (int i = 0; i < maxPursuers; i++) {
 		
 		agents[i + 1]->update(dtime, event);
-		//std::cout << agents[i+1]->getMaxVelocity() << std::endl;
 	}
 	for (int i = 0; i < maxPursuers+1; i++) {
 
@@ -98,7 +108,7 @@ void OurScene::draw()
 	agents[0]->draw();
 	for (int i = 0; i < maxPursuers; i++) {
 		agents[i+1]->draw();
-		draw_circle(TheApp::Instance()->getRenderer(), agents[i + 1]->getTarget().x, agents[i + 1]->getTarget().y, 15, 0, 255, 0, 255); //Target
+		if(showTargets) draw_circle(TheApp::Instance()->getRenderer(), agents[i + 1]->getTarget().x, agents[i + 1]->getTarget().y, 15, 0, 255, 0, 255); //Target
 	}
 	for (int i = 0; i < obstacles.size(); i++) {
 
@@ -106,13 +116,12 @@ void OurScene::draw()
 		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x + obstacles[i]->getW(), obstacles[i]->getPosition().y, 10, 0, 0, 255, 255);
 		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x + obstacles[i]->getW(), obstacles[i]->getPosition().y + obstacles[i]->getH(), 10, 0, 0, 255, 255);
 		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x, obstacles[i]->getPosition().y + obstacles[i]->getH(), 10, 0, 0, 255, 255);
+
+		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x + obstacles[i]->getW()/2, obstacles[i]->getPosition().y, 5, 0, 0, 255, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x + obstacles[i]->getW()/2, obstacles[i]->getPosition().y + obstacles[i]->getH(), 5, 0, 0, 255, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x + obstacles[i]->getW(), obstacles[i]->getPosition().y + obstacles[i]->getH()/2, 5, 0, 0, 255, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x, obstacles[i]->getPosition().y + obstacles[i]->getH()/2, 5, 0, 0, 255, 255);
 	}
-
-
-	//Vector2D auxVector = agents[1]->getPosition() + agents[1]->getVelocity().Normalize()*100;
-	//draw_circle(TheApp::Instance()->getRenderer(), auxVector.x, auxVector.y, 10, 0, 255, 255, 255); //Raycast
-	//auxVector = agents[1]->getPosition() + agents[1]->getVelocity().Normalize() * 50;
-	//draw_circle(TheApp::Instance()->getRenderer(), auxVector.x, auxVector.y, 5, 0, 255, 255, 255); //Raycast
 }
 
 const char* OurScene::getTitle()

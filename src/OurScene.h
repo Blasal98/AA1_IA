@@ -17,4 +17,5 @@ private:
 	std::vector<Obstacle*> obstacles;
 	Vector2D mouseTarget;
 	int maxPursuers;
+	bool showTargets;
 }; 
