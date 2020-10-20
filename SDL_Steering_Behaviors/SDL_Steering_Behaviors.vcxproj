@@ -58,19 +58,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\..\..\..\2. SEGON\REPETISIONES\TECNO2_2\Recursos\config.props" />
+    <Import Project="..\config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\..\..\..\2. SEGON\REPETISIONES\TECNO2_2\Recursos\config.props" />
+    <Import Project="..\config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\..\..\..\2. SEGON\REPETISIONES\TECNO2_2\Recursos\config.props" />
+    <Import Project="..\config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\..\..\..\2. SEGON\REPETISIONES\TECNO2_2\Recursos\config.props" />
+    <Import Project="..\config.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -139,25 +139,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Agent.cpp" />
-    <ClCompile Include="..\src\Flee.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Obstacle.cpp" />
+    <ClCompile Include="..\src\OurScene.cpp" />
     <ClCompile Include="..\src\SceneFlee.cpp" />
     <ClCompile Include="..\src\SceneSeekFlee.cpp" />
     <ClCompile Include="..\src\SceneSeek.cpp" />
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
-    <ClCompile Include="..\src\Seek.cpp" />
     <ClCompile Include="..\src\utils .cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Agent.h" />
-    <ClInclude Include="..\src\Flee.h" />
+    <ClInclude Include="..\src\Obstacle.h" />
+    <ClInclude Include="..\src\OurScene.h" />
+    <ClInclude Include="..\src\SteeringBehaviours.h" />
     <ClInclude Include="..\src\utils.h" />
     <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\SceneFlee.h" />
     <ClInclude Include="..\src\SceneSeekFlee.h" />
     <ClInclude Include="..\src\SceneSeek.h" />
     <ClInclude Include="..\src\SDL_SimpleApp.h" />
-    <ClInclude Include="..\src\Seek.h" />
     <ClInclude Include="..\src\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>

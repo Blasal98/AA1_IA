@@ -7,13 +7,15 @@ Agent::Agent() : sprite_texture(0),
 	             target(Vector2D(1000, 100)),
 	             velocity(Vector2D(0,0)),
 	             speed(0.5),
-	             max_force(5),
+	             max_force(1000),
 	             max_velocity(200),
 	             orientation(0),
 				 sprite_num_frames(0),
 	             sprite_w(0),
 	             sprite_h(0),
-	             draw_sprite(false)
+	             draw_sprite(false),
+				 index(-1),
+			     mass(1)
 {
 }
 
@@ -21,14 +23,10 @@ Agent::~Agent()
 {
 	if (sprite_texture)
 		SDL_DestroyTexture(sprite_texture);
-	if (steering_behaviour)
-		delete (steering_behaviour);
+
 }
 
-void Agent::setBehavior(SteeringBehavior *behavior)
-{
-	steering_behaviour = behavior;
-}
+
 
 Vector2D Agent::getPosition()
 {
@@ -80,8 +78,13 @@ void Agent::update(float dtime, SDL_Event *event)
 		break;
 	}
 
-	// Apply the steering behavior
-	steering_behaviour->applySteeringForce(this, dtime);
+
+	//euler
+	Vector2D acceleration = totalForce / mass;
+	velocity += acceleration * dtime;
+	velocity.Truncate(velocity, max_velocity);
+	position += velocity * dtime;
+
 	
 	// Update orientation
 	if (velocity.Length())
@@ -138,3 +141,23 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 
 	return true;
 }
+
+void Agent::setGameAgents(std::vector<Agent*> vec) {
+	gameAgents = vec;
+}
+void Agent::setIndex(int _i) {
+	index = _i;
+}
+void Agent::addForce(Vector2D _f) {
+	totalForce += _f;
+}
+void Agent::setForce(Vector2D _f) {
+	totalForce = _f;
+}
+float Agent::getMaxForce() {
+	return max_force;
+}
+Vector2D Agent::getTotalForce() {
+	return totalForce;
+}
+
