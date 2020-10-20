@@ -64,29 +64,13 @@ void OurScene::update(float dtime, SDL_Event *event)
 
 	SteeringBehaviours::Seek(agents[0], dtime);
 	agents[0]->update(dtime, event);
+	
 
-	
-	/*Vector2D a = { 0,0 };
-	Vector2D b = { 5,5 };
-	Vector2D c = { 0,5 };
-	Vector2D d = { 5,0 };
-	Vector2D* intersectionPoint = new Vector2D{ 0,0 };
-	bool doesItIntersect = true;
-	Vector2DUtils::SegmentSegmentIntersection(a,b,c,d,doesItIntersect,intersectionPoint);*/
-	
-	//Pursue
 	for (int i = 0; i < maxPursuers; i++) {
 		//Collision
 		if (!SteeringBehaviours::ObstacleAvoidance(agents[i + 1], obstacles, dtime)) {
-
-			float T = (agents[i + 1]->getPosition() - agents[0]->getPosition()).Length() / agents[i + 1]->getMaxVelocity();
-			Vector2D predictedTarget = agents[0]->getPosition() + agents[0]->getVelocity() * T * 0.5;
-			//std::cout << agents[i + 1]->getPosition().x <<std::endl;
-			agents[i + 1]->setTarget(predictedTarget);
-			SteeringBehaviours::Seek(agents[i + 1], dtime);
-		}
-		else {
-			agents[i + 1]->addForce({0,10000});
+			//Pursue
+			SteeringBehaviours::Pursue(agents[i + 1], agents, i + 1, dtime);
 		}
 
 	}
