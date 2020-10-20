@@ -45,16 +45,16 @@ namespace SteeringBehaviours {
 		agent->addForce(FlockingForce);
 	}
 
-	void CalculateSeparationDirection(std::vector<Agent> agents, int agent_index, Vector2D separationDir)
+	void CalculateSeparationDirection(Agent *agent, std::vector<Agent> agents, int agent_index, Vector2D separationDir)
 	{
 		int neighbourCount = agent_index;
 		Vector2D separationVec;
 		//foreach agent in array no se com posarlo
 		for each() 
 		{
-			if (distance(agents[agent_index].getPosition, position) < NEIGHTBOUR_RADIUS)
+			if (distance(agents[neighbourCount].getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
 			{
-				separationVec += (position - agents[agent_index]);
+				separationVec += (agent->getPosition - agents[neighbourCount]);
 				neighbourCount++;
 			}
 		}
@@ -62,16 +62,16 @@ namespace SteeringBehaviours {
 		separationDir = normalize(separationVec);
 	}
 
-	void CalculateCohesionDirection(std::vector<Agent> agents, int agent_index, Vector2D cohesionDir)
+	void CalculateCohesionDirection(Agent *agent, std::vector<Agent> agents, int agent_index, Vector2D cohesionDir)
 	{
 		int neighbourCount = agent_index;
 		Vector2D cohesionVec;
 		//foreach agent in array no se com posarlo
 		for each()
 		{
-			if (distance(agents[agent_index].getPosition, position) < NEIGHTBOUR_RADIUS)
+			if (distance(agents[neighbourCount].getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
 			{
-				cohesionVec += (position - agents[agent_index].getPosition);
+				cohesionVec += (agent->getPosition - agents[neighbourCount].getPosition);
 				neighbourCount++;
 			}
 		}
@@ -79,16 +79,16 @@ namespace SteeringBehaviours {
 		cohesionDir = normalize(cohesionVec);
 	}
 
-	void CalculateAlignmentDirection(std::vector<Agent> agents, int agent_index, Vector2D alignmentDir)
+	void CalculateAlignmentDirection(Agent *agent, std::vector<Agent> agents, int agent_index, Vector2D alignmentDir)
 	{
 		int neighbourCount = agent_index;
 		Vector2D averageVelocity;
 		//foreach agent in array no se com posarlo
 		for each()
 		{
-			if (distance(agents[agent_index].getPosition, position) < NEIGHTBOUR_RADIUS)
+			if (distance(agents[neighbourCount].getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
 			{
-				averageVelocity += agents[agent_index].getVelocity;
+				averageVelocity += agents[neighbourCount].getVelocity;
 				neighbourCount++;
 			}
 		}
