@@ -33,28 +33,28 @@ namespace SteeringBehaviours {
 		return doesItIntersect;
 	}
 	
-	void Flocking(Agent *agent, std::vector<Agent> agents, int agent_index, float dtime)
+	void Flocking(Agent *agent, std::vector<Agent*> agents, int agent_index, float dtime)
 	{
 		Vector2D separationDir;
 		Vector2D cohesionDir;
 		Vector2D alignmentDir;
-		CalculateSeparationDirection(agents, agent_index, separationDir);
-		CalculateCohesionDirection(agents, agent_index, cohesionDir);
-		CalculateAlignmentDirection(agents, agent_index, alignmentDir);
+		CalculateSeparationDirection(agent, agents, agent_index, separationDir);
+		CalculateCohesionDirection(agent, agents, agent_index, cohesionDir);
+		CalculateAlignmentDirection(agent, agents, agent_index, alignmentDir);
 		Vector2D FlockingForce = separationDir * K_SEPARATION_FORCE + cohesionDir * K_COHESION_FORCE + alignmentDir * K_ALIGNMENT_FORCE;
 		agent->addForce(FlockingForce);
 	}
 
-	void CalculateSeparationDirection(Agent *agent, std::vector<Agent> agents, int agent_index, Vector2D separationDir)
+	void CalculateSeparationDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D separationDir)
 	{
 		int neighbourCount = agent_index;
 		Vector2D separationVec;
 		//foreach agent in array no se com posarlo
 		for each() 
-		{
-			if (distance(agents[neighbourCount].getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
+		{	
+			if (distance(agents[neighbourCount]->getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
 			{
-				separationVec += (agent->getPosition - agents[neighbourCount]);
+				separationVec += (agent->getPosition - agents[neighbourCount]->getPosition);
 				neighbourCount++;
 			}
 		}
@@ -62,16 +62,16 @@ namespace SteeringBehaviours {
 		separationDir = normalize(separationVec);
 	}
 
-	void CalculateCohesionDirection(Agent *agent, std::vector<Agent> agents, int agent_index, Vector2D cohesionDir)
+	void CalculateCohesionDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D cohesionDir)
 	{
 		int neighbourCount = agent_index;
 		Vector2D cohesionVec;
 		//foreach agent in array no se com posarlo
 		for each()
 		{
-			if (distance(agents[neighbourCount].getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
+			if (distance(agents[neighbourCount]->getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
 			{
-				cohesionVec += (agent->getPosition - agents[neighbourCount].getPosition);
+				cohesionVec += (agent->getPosition - agents[neighbourCount]->getPosition);
 				neighbourCount++;
 			}
 		}
@@ -79,16 +79,17 @@ namespace SteeringBehaviours {
 		cohesionDir = normalize(cohesionVec);
 	}
 
-	void CalculateAlignmentDirection(Agent *agent, std::vector<Agent> agents, int agent_index, Vector2D alignmentDir)
+	void CalculateAlignmentDirection(Agent *agent, std::vector<Agent*> agents, int agent_index, Vector2D alignmentDir)
 	{
 		int neighbourCount = agent_index;
 		Vector2D averageVelocity;
 		//foreach agent in array no se com posarlo
 		for each()
 		{
-			if (distance(agents[neighbourCount].getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
+			if (distance(agents[neighbourCount]->getPosition, agent->getPosition) < NEIGHTBOUR_RADIUS)
 			{
-				averageVelocity += agents[neighbourCount].getVelocity;
+				
+				averageVelocity += agents[neighbourCount]->getVelocity;
 				neighbourCount++;
 			}
 		}
