@@ -8,14 +8,14 @@ OurScene::OurScene()
 	//creacio del agent main
 	Agent *agent = new Agent;
 
-	agent->setPosition(Vector2D(1000, 600));
-	agent->setTarget(Vector2D(1000, 600));
+	agent->setPosition(Vector2D(1100, 600));
+	agent->setTarget(Vector2D(1100, 600));
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agents.push_back(agent);
-	mouseTarget = Vector2D(1000, 600);
+	mouseTarget = Vector2D(1100, 600);
 
 	//creacio dels agents perseguidors
-	maxPursuers = 1;
+	maxPursuers = 10;
 	for (int i = 0; i < maxPursuers; i++) {
 		agent = new Agent;
 
@@ -29,9 +29,11 @@ OurScene::OurScene()
 		
 		
 	}
-	obstacles.push_back(new Obstacle());
 
-
+	obstacles.push_back(new Obstacle(100, 200, { 800,400 }));
+	obstacles.push_back(new Obstacle(175, 50, { 100,400 }));
+	obstacles.push_back(new Obstacle(25, 200, { 200,100 }));
+	obstacles.push_back(new Obstacle(10, 200, { 350,500 }));
 }
 
 OurScene::~OurScene()
@@ -85,13 +87,21 @@ void OurScene::draw()
 	agents[0]->draw();
 	for (int i = 0; i < maxPursuers; i++) {
 		agents[i+1]->draw();
-		draw_circle(TheApp::Instance()->getRenderer(), agents[i + 1]->getTarget().x, agents[i + 1]->getTarget().y, 15, 0, 255, 0, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), agents[i + 1]->getTarget().x, agents[i + 1]->getTarget().y, 15, 0, 255, 0, 255); //Target
 	}
-	draw_circle(TheApp::Instance()->getRenderer(), obstacles[0]->getPosition().x, obstacles[0]->getPosition().y, 10, 0, 0, 255, 255);
-	draw_circle(TheApp::Instance()->getRenderer(), obstacles[0]->getPosition().x + obstacles[0]->getW(), obstacles[0]->getPosition().y + obstacles[0]->getH(), 10, 0, 0, 255, 255);
+	for (int i = 0; i < obstacles.size(); i++) {
 
-	Vector2D auxVector = agents[1]->getPosition() + agents[1]->getVelocity().Normalize()*100;
-	draw_circle(TheApp::Instance()->getRenderer(), auxVector.x, auxVector.y, 10, 0, 255, 255, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x, obstacles[i]->getPosition().y, 10, 0, 0, 255, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x + obstacles[i]->getW(), obstacles[i]->getPosition().y, 10, 0, 0, 255, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x + obstacles[i]->getW(), obstacles[i]->getPosition().y + obstacles[i]->getH(), 10, 0, 0, 255, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), obstacles[i]->getPosition().x, obstacles[i]->getPosition().y + obstacles[i]->getH(), 10, 0, 0, 255, 255);
+	}
+
+
+	//Vector2D auxVector = agents[1]->getPosition() + agents[1]->getVelocity().Normalize()*100;
+	//draw_circle(TheApp::Instance()->getRenderer(), auxVector.x, auxVector.y, 10, 0, 255, 255, 255); //Raycast
+	//auxVector = agents[1]->getPosition() + agents[1]->getVelocity().Normalize() * 50;
+	//draw_circle(TheApp::Instance()->getRenderer(), auxVector.x, auxVector.y, 5, 0, 255, 255, 255); //Raycast
 }
 
 const char* OurScene::getTitle()

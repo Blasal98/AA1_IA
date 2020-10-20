@@ -31,38 +31,64 @@ namespace SteeringBehaviours {
 		Vector2D rayCast = agent->getPosition();
 		rayCast += agent->getVelocity().Normalize() * 100;
 		Vector2D normal = { 0,0 };
+		std::vector<Vector2D> intersectionPoints;
+		std::vector<Vector2D> intersectionNormals;
 
 		for (int i = 0; i < obstacles.size(); i++) {
 
 			if (Vector2DUtils::SegmentSegmentIntersection(obstacles[i]->getCorners()[0], obstacles[i]->getCorners()[1], //UP
 				agent->getPosition(), rayCast,
 				doesItIntersect, intersectionPoint)) {
+				intersectionPoints.push_back(*intersectionPoint);
 				normal = { 0,-1 };
-				break;
+				intersectionNormals.push_back(normal);
+
+
 			}
 			if (Vector2DUtils::SegmentSegmentIntersection(obstacles[i]->getCorners()[2], obstacles[i]->getCorners()[3], //DOWN
 				agent->getPosition(), rayCast,
 				doesItIntersect, intersectionPoint)) {
+				intersectionPoints.push_back(*intersectionPoint);
 				normal = { 0, 1 };
-				break;
+				intersectionNormals.push_back(normal);
+
+
 			}
 			if (Vector2DUtils::SegmentSegmentIntersection(obstacles[i]->getCorners()[0], obstacles[i]->getCorners()[2], //LEFT
 				agent->getPosition(), rayCast,
 				doesItIntersect, intersectionPoint)) {
+				intersectionPoints.push_back(*intersectionPoint);
 				normal = { -1, 0 };
-				break;
+				intersectionNormals.push_back(normal);
+
+
 			}
 			if (Vector2DUtils::SegmentSegmentIntersection(obstacles[i]->getCorners()[1], obstacles[i]->getCorners()[3], //RIGHT
 				agent->getPosition(), rayCast,
 				doesItIntersect, intersectionPoint)) {
+				intersectionPoints.push_back(*intersectionPoint);
 				normal = { 1, 0 };
-				break;
-			}
-				
-		}
-		if (normal.x != 0 || normal.y != 0) {
+				intersectionNormals.push_back(normal);
 
-			agent->setTarget(*intersectionPoint + normal * 20);
+
+			}
+			
+		}
+		int nearestPointIndex = -1;
+		if (intersectionPoints.size() > 0) {
+			nearestPointIndex = 0;
+
+			for (int i = 1; i < intersectionPoints.size(); i++) {
+				if ((agent->getPosition() - intersectionPoints[nearestPointIndex]).Length() > (agent->getPosition() - intersectionPoints[i]).Length()) {
+					nearestPointIndex = i;
+				}
+			}
+		}
+			
+
+		if (nearestPointIndex >= 0) {
+
+			agent->setTarget(intersectionPoints[nearestPointIndex] + intersectionNormals[nearestPointIndex] * 20);
 			SteeringBehaviours::Seek(agent, dtime);
 
 			return true;
